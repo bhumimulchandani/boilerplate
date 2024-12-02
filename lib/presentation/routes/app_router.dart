@@ -34,17 +34,19 @@ import 'package:boilerplate/presentation/routes/authguard.dart';
 class AppRouter extends $AppRouter {
   @override
   List<AutoRoute> get routes => [
+        // AutoRoute(page: page)
         _buildRoute(SignUp.page, initial: true),
         _buildRoute(Signin.page),
-        _buildRoute(BookDetails.page, guards: [AuthGuard()]), // AuthGuard for BookDetails
+        _buildRoute(BookDetails.page, guards: [AuthGuard()]),
         _buildRoute(DummyRoute.page),
       ];
 
-  CustomRoute _buildRoute(page, {bool initial = false, List<AutoRouteGuard> guards = const []}) {
+  CustomRoute _buildRoute(page,
+      {bool initial = false, List<AutoRouteGuard> guards = const []}) {
     return CustomRoute(
       page: page,
       initial: initial,
-      guards: guards,  // Ensure guards are added
+      guards: guards,
       transitionsBuilder: fadeTransition,
     );
   }

@@ -1,0 +1,13 @@
+{
+  
+  "signIn": "Se connecter",
+  "enterYourEmail": "Entrez votre email",
+  "enterPassword": "Entrez le mot de passe",
+  "boiPoka": "Boi-Poka",
+  "or":"ou",
+  "donthaveanaccount":"Vous n'avez pas de compte?  ",
+  "signUp":"S inscrire",
+  "forgotyourpassword":"Mot de passe oublié?  ",
+  "reset":"Réinitialiser"
+
+}

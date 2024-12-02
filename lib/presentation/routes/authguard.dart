@@ -1,20 +1,18 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:boilerplate/presentation/riverpod/auth_notifier.dart';
+import 'package:boilerplate/presentation/routes/app_router.gr.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:boilerplate/presentation/provider/auth_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AuthGuard extends AutoRouteGuard {
   @override
   Future<void> onNavigation(
       NavigationResolver resolver, StackRouter router) async {
-    final currentRoute = resolver.route.name;
-
-    final isAuthenticated = Provider.of<AuthProvider>(
+    final isAuthenticated = ProviderScope.containerOf(
       router.navigatorKey.currentContext!,
-      listen: true,
-    ).isAuthenticated;
+    ).read(authProvider).isAuthenticated;
 
-    if (currentRoute == 'BookDetails' && !isAuthenticated) {
+    if (!isAuthenticated) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showDialog(
           context: router.navigatorKey.currentContext!,
@@ -24,7 +22,10 @@ class AuthGuard extends AutoRouteGuard {
               content: const Text('Please sign in to access this page.'),
               actions: [
                 TextButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    router.push(const Signin());
+                  },
                   child: const Text('OK'),
                 ),
               ],
@@ -32,10 +33,10 @@ class AuthGuard extends AutoRouteGuard {
           },
         );
       });
-
-      resolver.next(false);
+      resolver.next(false); 
     } else {
-      resolver.next();
+      resolver.next(); 
     }
   }
 }
+
